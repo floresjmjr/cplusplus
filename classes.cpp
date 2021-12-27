@@ -51,7 +51,7 @@ void Person::getFullName()
 //Employee class that uses the Person class as a type for its member
 class Employee
 {
-  Person name;
+  Person person;
   string jobTitle;
 public:
   Employee(string first, string last);
@@ -59,14 +59,14 @@ public:
   void setJobTitle(string t);
 };
 
-//Defining the constructor
+//Defining the constructor for the Employee class
 Employee::Employee(string f, string l){
-  Person(f, l);
-} 
+person = Person(f, l);
+}
 
 //Defining the employeeProfile function of the Employee class
 void Employee::employeeProfile(){
-  cout << "\n";
+  person.getFullName();
   cout << jobTitle;
   cout << "\n";
 }
@@ -85,7 +85,10 @@ int main()
   jorge.getFullName();
 
   Employee mike("Mike", "Tyson");
+  Employee aimee("Aimee", "Coldrun");
   mike.setJobTitle("Clerk");
   mike.employeeProfile();
+  aimee.setJobTitle("Writer");
+  aimee.employeeProfile();
   return 0;
 }
