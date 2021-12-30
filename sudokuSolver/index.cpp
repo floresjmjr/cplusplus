@@ -1,16 +1,29 @@
-#include "validate2.cpp"
+//Files
+#include "sudokuSolver.cpp"
+#include "validateClass.cpp"
+// #include "validate.cpp"
+
+//Libraries
+#include <iostream>
+using namespace std;
+
 
 int main() {
+  //Create sudoku solver app with input sudoku
+  SudokuSolver solverTest;
+  // cout << solverTest.sudokuState[4][4];
+  SolutionValidator validCheck;
+  cout << validCheck.checkRows() << "\n";
+  cout << validCheck.checkColumns() << "\n";
 
-  cout << "\n" << "\n";
-  // cout << validateRows() << "\n";
-  // cout << validateColumns() << "\n";
-  checkAllCubes();
-  // for(auto& row: puzzle[1]){
-  //   for(auto num: row){
-  //     cout << num << endl;
-  //   };
-  // };
+  //Dealing with cubes
 
+
+
+  if(validCheck.rows && validCheck.columns & validCheck.cubes){
+    cout << "All correct";
+  }
+
+  cout << "\n";
   return 0;
 }
