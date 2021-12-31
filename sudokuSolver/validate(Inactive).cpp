@@ -1,5 +1,5 @@
 #include <iostream>
-#include "puzzle.cpp"
+#include "puzzle(cubeApproach).cpp"
 using namespace std;
 
 bool containsAllNums(int arg[])

@@ -1,7 +1,7 @@
 //Files
 #include "sudokuSolver.cpp"
 #include "validateClass.cpp"
-// #include "validate.cpp"
+#include "techniques.cpp"
 
 //Libraries
 #include <iostream>
@@ -11,6 +11,19 @@ int main()
 {
   //Create sudoku solver app with input sudoku
   SudokuSolver solver;
+  bool inProgress = true;
+  Technique solverTechniques;
+  //while loop until variable (inProgres) evaluates to false
+  //while(inProgress) {
+  //
+  solverTechniques.missingSingleNum(solver.sudokuState);
+
+
+
+
+
+
+  // }
 
   //Validate the sudoku state of the of SudokuSolver instance
   SolutionValidator validCheck;
@@ -26,6 +39,7 @@ int main()
     cout << "All rows, columns and cubes include 1..9 only once!!";
   }
 
+  //Display sudoku state
   cout << "\n";
   return 0;
 }
