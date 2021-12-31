@@ -16,7 +16,7 @@ int cArr[9] = {1, 2, 3, 0, 5, 6, 7, 8, 9};
 //Default Cube constructor definition
 Cube::Cube(){}
 
-//Cube constructor definition
+//Cube second constructor definition
 Cube::Cube(int c[9])
 {
   for (int i = 0; i < 3; i += 1)

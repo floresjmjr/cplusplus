@@ -9,8 +9,9 @@ using namespace std;
 class SudokuSolver
 {
 public:
-  int sudokuState[9][9];
+  int sudokuState[9][9];    ////Need to change this to row pointers////
   int *cubePointers[9][9]; //Array that holds arrays which have pointers as values that point to the addresses of the sudokuState
+  ////Need columnPointers////
 public:
   SudokuSolver();
   // void displayPuzzle();
