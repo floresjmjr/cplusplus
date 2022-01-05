@@ -2,7 +2,7 @@
 //Single Nested Array
 
 //Input from left to right
-int solvedPuzzle[9][9] = {
+int solvedSudoku[9][9] = {
     {7, 1, 5, 9, 8, 4, 2, 6, 3},
     {8, 4, 3, 6, 2, 5, 7, 9, 1},
     {9, 2, 6, 1, 7, 3, 4, 8, 5},
