@@ -15,11 +15,11 @@ int main()
   Technique solverTechniques;
   puzzleSolver1.displayState();
   //Cube Rows
-  solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[0], puzzleSolver1.cubePointers[1], puzzleSolver1.cubePointers[2], "Rows");
-  solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[3], puzzleSolver1.cubePointers[4], puzzleSolver1.cubePointers[5], "Rows");
-  solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[6], puzzleSolver1.cubePointers[7], puzzleSolver1.cubePointers[8], "Rows");
+  solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers, "Rows");
+  // solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[3], puzzleSolver1.cubePointers[4], puzzleSolver1.cubePointers[5], "Rows");
+  // solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[6], puzzleSolver1.cubePointers[7], puzzleSolver1.cubePointers[8], "Rows");
   //Cube Columns
-  // solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[0], puzzleSolver1.cubePointers[3], puzzleSolver1.cubePointers[6], "Columns");
+  solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers, "Columns");
   // solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[1], puzzleSolver1.cubePointers[4], puzzleSolver1.cubePointers[7], "Columns");
   // solverTechniques.singleDirectionGrouping(puzzleSolver1.cubePointers[2], puzzleSolver1.cubePointers[5], puzzleSolver1.cubePointers[8], "Columns");
 
