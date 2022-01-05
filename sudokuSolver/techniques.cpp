@@ -19,7 +19,7 @@ private:
 
 public:
   void missingSingleNum(int *arr[9][9]);
-  void singleDirectionGrouping(int *arr[9], int *arr2[9], int *arr3[9], string direction);
+  void singleDirectionGrouping(int *arr[9][9], string direction);
 };
 
 int Technique::countZeros(int *arr[9])
@@ -69,8 +69,8 @@ void Technique::missingSingleNum(int *arr[9][9])
   }
 }
 
-void checkRowIntersection(){
-
+void checkRowIntersection()
+{
 }
 
 void solveIfPossibleColumns(int *lastCube[9], int num, int idx, int idx2)
@@ -139,13 +139,14 @@ void solveIfPossibleColumns(int *lastCube[9], int num, int idx, int idx2)
     *(lastCube[fillIndex]) = num;
   }
   cout << "\n";
-  if (totalZeros > 1 && !isDuplicate){
+  if (totalZeros > 1 && !isDuplicate)
+  {
     checkRowIntersection();
   }
 }
 
-void checkColumnIntersection(int* intersectingCube[9], int startingPoint){
-
+void checkColumnIntersection(int *intersectingCube[9], int startingPoint)
+{
 }
 
 // check if last cube has one cell empty(lastCube, starting obj)
@@ -216,15 +217,17 @@ void solveIfPossibleRows(int *lastCube[9], int num, int idx, int idx2)
     *(lastCube[fillIndex]) = num;
   }
   cout << "\n";
-  if (totalZeros > 1 && !isDuplicate){
+  if (totalZeros > 1 && !isDuplicate)
+  {
     checkColumnIntersection(lastCube, start);
   }
 }
 
-void cubeCombo(int *cube1[9], int *cube2[9], int *lastCube[9], string direction, string cubeCombo){
-    int cellValue;
-    int cube1Index;
-    int cube2Index;
+void cubeCombo(int *cube1[9], int *cube2[9], int *lastCube[9], string direction, string cubeCombo)
+{
+  int cellValue;
+  int cube1Index;
+  int cube2Index;
   cout << cubeCombo
        << "\n";
   for (int i = 0; i < 9; i += 1)
@@ -252,94 +255,43 @@ void cubeCombo(int *cube1[9], int *cube2[9], int *lastCube[9], string direction,
   }
 }
 
-void Technique::singleDirectionGrouping(int *cube1[9], int *cube2[9], int *cube3[9], string direction)
+void checkIntersection()
 {
-  
-  struct startCombo
+}
+
+void Technique::singleDirectionGrouping(int *cubePointers[9][9], string direction)
+{
+  // 0, 1, 2
+  //==>  Cube combos => 0,1 => 0,2 => 1,2
+  // 3, 4, 5
+  //==>  Cube combos => 3,4 => 3,5 => 4,5
+  // 6, 7, 8
+  //==>  Cube combos => 6,7 => 6,8 => 7,8
+
+  //Single Direction Row/Column
+  int intersectingCubeCell = 100; //Magic number thats interpreted as 'false';
+  if (direction == "Rows")
   {
-    int number;
-    int index;
-    int index2;
-  };
-  startCombo firstAndSecond;
-  cout << "FirstAndSecond"
-       << "\n";
-  for (int i = 0; i < 9; i += 1)
-  {
-    if (*cube1[i] > 0)
+    for (int i = 0; i < 9; i += 3)
     {
-      firstAndSecond.number = *cube1[i];
-      firstAndSecond.index = i;
-      for (int k = 0; k < 9; k += 1)
-      {
-        if (firstAndSecond.number == *cube2[k])
-        {
-          firstAndSecond.index2 = k;
-          if (direction == "Rows")
-          {
-            solveIfPossibleRows(cube3, firstAndSecond.number, firstAndSecond.index, firstAndSecond.index2);
-          }
-          else if (direction == "Columns")
-          {
-            solveIfPossibleColumns(cube3, firstAndSecond.number, firstAndSecond.index, firstAndSecond.index2);
-          }
-        }
-      }
+      cubeCombo(cubePointers[i], cubePointers[i + 1], cubePointers[i + 2], direction, "First and Second Cubes"); //Cube combinations
+      // if(intersectingCubeCell < 9){
+      //   checkIntersection();
+      // }
+      cubeCombo(cubePointers[i], cubePointers[i + 2], cubePointers[i + 1], direction, "First and Third Cubes");
+      cubeCombo(cubePointers[i + 1], cubePointers[i + 2], cubePointers[i], direction, "Second and Third Cubes");
     }
   }
-
-  startCombo secondAndThird;
-  cout << "secondAndThird"
-       << "\n";
-  for (int i = 0; i < 9; i += 1)
+  if (direction == "Columns")
   {
-    if (*cube2[i] > 0)
+    for (int i = 0; i < 3; i += 1)
     {
-      secondAndThird.number = *cube2[i];
-      secondAndThird.index = i;
-      for (int k = 0; k < 9; k += 1)
-      {
-        if (secondAndThird.number == *cube3[k])
-        {
-          secondAndThird.index2 = k;
-          if (direction == "Rows")
-          {
-            solveIfPossibleRows(cube1, secondAndThird.number, secondAndThird.index, secondAndThird.index2);
-          }
-          else if (direction == "Columns")
-          {
-            solveIfPossibleColumns(cube1, secondAndThird.number, secondAndThird.index, secondAndThird.index2);
-          }
-        }
-      }
-    }
-  }
-
-  startCombo firstAndThird;
-  cout << "FirstAndThird"
-       << "\n";
-  for (int i = 0; i < 9; i += 1)
-  {
-    if (*cube1[i] > 0)
-    {
-      firstAndThird.number = *cube1[i];
-      firstAndThird.index = i;
-      for (int k = 0; k < 9; k += 1)
-      {
-        if (firstAndThird.number == *cube3[k])
-        {
-          firstAndThird.index2 = k;
-          if (direction == "Rows")
-          {
-            solveIfPossibleRows(cube2, firstAndThird.number, firstAndThird.index, firstAndThird.index2);
-          }
-          else if (direction == "Columns")
-          {
-            solveIfPossibleColumns(cube2, firstAndThird.number, firstAndThird.index, firstAndThird.index2);
-          }
-        }
-      }
+      cubeCombo(cubePointers[i], cubePointers[i + 3], cubePointers[i + 6], direction, "First and Second Cubes");
+      // if(intersectingCubeCell < 9){
+      //   checkIntersection();
+      // }
+      cubeCombo(cubePointers[i], cubePointers[i + 6], cubePointers[i + 3], direction, "First and Third Cubes");
+      cubeCombo(cubePointers[i + 3], cubePointers[i + 6], cubePointers[i], direction, "Second and Third Cubes");
     }
   }
 }
-
