@@ -13,7 +13,7 @@ public:
   int *cubePointers[9][9];
   int *columnPointers[9][9];
   int *rowPointers[9][9];
-
+  //int *cubePointers[9][3][3];    //Wouldn't implementing this reduce code in the cubeCombo technique?? You would need top,left,middle,center.... maybe the cubeClass u created?
 private:
   void formatCubes();
   void buildCube(int sR, int eR, int sC, int eC, int cube);
