@@ -1,9 +1,7 @@
-#include <string>
-#include <iostream>
 #include "inputSudoku.cpp"
 // #include "cubeClass.cpp"
 #include "solved.cpp"
-using namespace std;
+#include "index.h"
 
 //SudokuSolver class
 class SudokuSolver

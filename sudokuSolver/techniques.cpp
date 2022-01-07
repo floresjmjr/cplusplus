@@ -1,8 +1,5 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <vector>
-// using namespace std;
+#include "index.h"
+#include "techniques.h"
 //Easy Puzzles
 //Check if intersection of horiztonal and vertical leave only one option
 //Check if only one empty square left in 3x3;
@@ -78,10 +75,6 @@ void Technique::missingSingleNum(int *arr[9][9])
     cout << "No missing number: " << i << "\n";
   }
 }
-
-// void checkRowIntersection()
-// {
-// }
 
 void Technique::solveIfPossibleColumns(int *lastCube[9], int idx, int idx2)
 {
@@ -231,75 +224,125 @@ void Technique::solveIfPossibleRows(int *lastCube[9], int idx, int idx2)
 void Technique::checkRowIntersection(int *intersectingFirstCube[9], int *intersectingSecondCube[9], int *lastCube[9])
 {
   cout << "  **Row Intersection ";
-  for (int i = startingPoint; i < 3; i += 1)
+  for (int i = startingPoint; i < 9; i += 3)
+  {
+    cout << *(lastCube[i]) << ", ";
+  }
+  cout << "\n";
+  int previousIndex = -1;
+  for (int i = startingPoint; i < 9; i += 3)
   {
     if (*(lastCube[i]) == 0)
     {
-      int previousIndex;
       if (totalCandidates == 1)
       {
         *(lastCube[i]) = fillingNumber;
         cout << " ##Fill " << fillingNumber;
       }
-      for (int k = i; k < 9; k += 3)
+      int rowStart;
+      if (i == 0 || i == 1 || i == 2)
+      {
+        rowStart = 0;
+      }
+      else if (i == 3 || i == 4 || i == 5)
+      {
+        rowStart = 3;
+      }
+      else if (i == 6 || i == 7 || i == 8)
+      {
+        rowStart = 6;
+      }
+      for (int k = rowStart; k < (rowStart + 3); k += 1)
       {
         if (*(intersectingFirstCube[k]) == fillingNumber)
         {
           totalCandidates -= 1;
-          cout << " First Intersecting Cube Index: " << k << " Value: " << *(intersectingFirstCube[k]);
+          cout << " First Intersecting Cube Index: " << k;
+          if (previousIndex > -1)
+          {
+            *(lastCube[previousIndex]) = fillingNumber;
+            cout << " ##Fill " << fillingNumber;
+          }
+          break;
         }
         if (*(intersectingSecondCube[k]) == fillingNumber)
         {
           totalCandidates -= 1;
-          cout << " Second Intersecting Cube Index: " << k << " Value: " << *(intersectingFirstCube[k]);
-        }
-        if (totalCandidates == 1)
-        {
-          // *(lastCube[previousIndex]) = fillingNumber;
-          cout << " ##Fill " << fillingNumber;
+          cout << " Second Intersecting Cube Index: " << k;
+          if (previousIndex > -1)
+          {
+            *(lastCube[previousIndex]) = fillingNumber;
+            cout << " ##Fill " << fillingNumber;
+          }
+          break;
         }
       }
-      // previousIndex = i;
-      //           cout << " PrevIdx: " << previousIndex;
-
+      previousIndex = i;
+      cout << " PrevIdx: " << previousIndex;
     }
   }
 }
 
 void Technique::checkColumnIntersection(int *intersectingFirstCube[9], int *intersectingSecondCube[9], int *lastCube[9])
 {
-  cout << "  **Column Intersection ";
-  for (int i = startingPoint; i < 3; i += 1)
+  cout << "  **Column Intersection " << startingPoint;
+  for (int j = startingPoint; j < (startingPoint + 3); j += 1)
   {
+    cout << *(lastCube[j]) << ", ";
+  }
+  int previousIndex = -1;
+  for (int i = startingPoint; i < (startingPoint + 3); i += 1)
+  {
+    // cout << "This is i: " << i;
     if (*(lastCube[i]) == 0)
     {
-      int previousIndex;
+      // cout << "Previous Index Declaration: " << previousIndex;
       if (totalCandidates == 1)
       {
         *(lastCube[i]) = fillingNumber;
         cout << " ##Fill " << fillingNumber;
       }
-      for (int k = i; k < 9; k += 3)
+      int columnStart;
+      if (i == 0 || i == 3 || i == 6)
+      {
+        columnStart = 0;
+      }
+      else if (i == 1 || i == 4 || i == 7)
+      {
+        columnStart = 1;
+      }
+      else if (i == 2 || i == 5 || i == 8)
+      {
+        columnStart = 2;
+      }
+      cout << "ColumnStart:" << columnStart;
+      for (int k = columnStart; k < 9; k += 3)
       {
         if (*(intersectingFirstCube[k]) == fillingNumber)
         {
           totalCandidates -= 1;
-          cout << " First Intersecting Cube Index: " << k << " Value: " << *(intersectingFirstCube[k]);
+          cout << " First Intersecting Cube Index: " << k;
+          if (previousIndex > -1)   //Sometimes the index will be zero, which evaluates to false;
+          {
+            *(lastCube[previousIndex]) = fillingNumber;
+            cout << " ##Fill " << fillingNumber;
+          }
+          break;
         }
         if (*(intersectingSecondCube[k]) == fillingNumber)
         {
           totalCandidates -= 1;
-          cout << " Second Intersecting Cube Index: " << k << " Value: " << *(intersectingFirstCube[k]);
-        }
-        if (totalCandidates == 1)
-        {
-          *(lastCube[previousIndex]) = fillingNumber;
-          cout << " ##Fill " << fillingNumber;
+          cout << " Second Intersecting Cube Index: " << k;
+          if (previousIndex > -1)
+          {
+            *(lastCube[previousIndex]) = fillingNumber;
+            cout << " ##Fill " << fillingNumber;
+          }
           break;
         }
       }
-        previousIndex = i;
-        cout << " PrevIdx: " << previousIndex;
+      previousIndex = i;
+      cout << " PrevIdx: " << previousIndex;
     }
   }
 }
@@ -310,17 +353,21 @@ void Technique::cubeCombo(int *cube1[9], int *cube2[9], int *lastCube[9], string
   int cube2Index;
   for (int i = 0; i < 9; i += 1)
   {
-    if (*cube1[i] > 0)
+    // cout << "CubeCombo i/val: " << i << " " << *(cube1[i]) << "\n";
+    if (*(cube1[i]) > 0)
     {
       fillingNumber = *(cube1[i]);
       cube1Index = i;
       for (int k = 0; k < 9; k += 1)
       {
+        // cout << "CubeCombo k/val: " << k << " " << *(cube2[k]) << "\n";
         if (fillingNumber == *(cube2[k]))
         {
           cube2Index = k;
           if (direction == "Rows")
           {
+            cout << "Before"
+                 << "\n";
             solveIfPossibleRows(lastCube, cube1Index, cube2Index);
             if (intersectionCheck)
             {
@@ -329,6 +376,8 @@ void Technique::cubeCombo(int *cube1[9], int *cube2[9], int *lastCube[9], string
           }
           else if (direction == "Columns")
           {
+            cout << "Before"
+                 << "\n";
             solveIfPossibleColumns(lastCube, cube1Index, cube2Index);
             if (intersectionCheck)
             {
@@ -356,32 +405,47 @@ void Technique::singleDirectionGrouping(int *cubePointers[9][9], int *columnPoin
     //if(int i = 0; i < 9; i += 3){}    //Refactor
     cout << "First and Second Cubes - 0, 1, 2"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[0], cubePointers[0 + 1], cubePointers[0 + 2], direction, cubePointers[5], cubePointers[8]);
-    cout << "First and Third Cubes"
+
+    cout << "First and Third Cubes - 0, 1, 2"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[0], cubePointers[0 + 2], cubePointers[0 + 1], direction, cubePointers[4], cubePointers[7]);
-    cout << "Second and Third Cubes"
+
+    cout << "Second and Third Cubes - 0, 1, 2"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[0 + 1], cubePointers[0 + 2], cubePointers[0], direction, cubePointers[3], cubePointers[6]);
 
     cout << "First and Second Cubes - 3,4,5"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[3], cubePointers[3 + 1], cubePointers[3 + 2], direction, cubePointers[2], cubePointers[8]);
-    cout << "First and Third Cubes"
+
+    cout << "First and Third Cubes - 3,4,5"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[3], cubePointers[3 + 2], cubePointers[3 + 1], direction, cubePointers[1], cubePointers[7]);
-    cout << "Second and Third Cubes"
+
+    cout << "Second and Third Cubes - 3,4,5"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[3 + 1], cubePointers[3 + 2], cubePointers[3], direction, cubePointers[0], cubePointers[6]);
 
     cout << "First and Second Cubes - 6,7,8"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[6], cubePointers[6 + 1], cubePointers[6 + 2], direction, cubePointers[2], cubePointers[5]);
-    cout << "First and Third Cubes"
+
+    cout << "First and Third Cubes - 6,7,8"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[6], cubePointers[6 + 2], cubePointers[6 + 1], direction, cubePointers[1], cubePointers[4]);
-    cout << "Second and Third Cubes"
+
+    cout << "Second and Third Cubes - 6,7,8"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[6 + 1], cubePointers[6 + 2], cubePointers[6], direction, cubePointers[0], cubePointers[3]);
   }
 
@@ -398,32 +462,47 @@ void Technique::singleDirectionGrouping(int *cubePointers[9][9], int *columnPoin
     //   for (int i = 0; i < 3; i += 1){}   //Refactor
     cout << "First and Second Cubes - 0,3,6"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[0], cubePointers[0 + 3], cubePointers[0 + 6], direction, cubePointers[7], cubePointers[8]);
-    cout << "First and Third Cubes"
+
+    cout << "First and Third Cubes - 0,3,6"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[0], cubePointers[0 + 6], cubePointers[0 + 3], direction, cubePointers[4], cubePointers[5]);
-    cout << "Second and Third Cubes"
+
+    cout << "Second and Third Cubes - 0,3,6"
          << "\n";
+    displayState(rowPointers);
     cubeCombo(cubePointers[0 + 3], cubePointers[0 + 6], cubePointers[0], direction, cubePointers[1], cubePointers[2]);
 
-    // cout << "First and Second Cubes - 1,4,7"
-    //      << "\n";
-    // cubeCombo(cubePointers[0], cubePointers[0 + 3], cubePointers[0 + 6], direction, cubePointers[7], cubePointers[8]);
-    // cout << "First and Third Cubes"
-    //      << "\n";
-    // cubeCombo(cubePointers[0], cubePointers[0 + 6], cubePointers[0 + 3], direction, cubePointers[4], cubePointers[5]);
-    // cout << "Second and Third Cubes"
-    //      << "\n";
-    // cubeCombo(cubePointers[0 + 3], cubePointers[0 + 6], cubePointers[0], direction, cubePointers[1], cubePointers[2]);
+    cout << "First and Second Cubes - 1,4,7"
+         << "\n";
+    displayState(rowPointers);
+    cubeCombo(cubePointers[1], cubePointers[1 + 3], cubePointers[1 + 6], direction, cubePointers[6], cubePointers[8]);
 
-    // cout << "First and Second Cubes - 2,5,8"
-    //      << "\n";
-    // cubeCombo(cubePointers[0], cubePointers[0 + 3], cubePointers[0 + 6], direction, cubePointers[7], cubePointers[8]);
-    // cout << "First and Third Cubes"
-    //      << "\n";
-    // cubeCombo(cubePointers[0], cubePointers[0 + 6], cubePointers[0 + 3], direction, cubePointers[4], cubePointers[5]);
-    // cout << "Second and Third Cubes"
-    //      << "\n";
-    // cubeCombo(cubePointers[0 + 3], cubePointers[0 + 6], cubePointers[0], direction, cubePointers[1], cubePointers[2]);
+    cout << "First and Third Cubes - 1,4,7"
+         << "\n";
+    displayState(rowPointers);
+    cubeCombo(cubePointers[1], cubePointers[1 + 6], cubePointers[1 + 3], direction, cubePointers[3], cubePointers[5]);
+
+    cout << "Second and Third Cubes - 1,4,7"
+         << "\n";
+    displayState(rowPointers);
+    cubeCombo(cubePointers[1 + 3], cubePointers[1 + 6], cubePointers[1], direction, cubePointers[0], cubePointers[2]);
+
+    cout << "First and Second Cubes - 2,5,8"
+         << "\n";
+    displayState(rowPointers);
+    cubeCombo(cubePointers[2], cubePointers[2 + 3], cubePointers[2 + 6], direction, cubePointers[6], cubePointers[7]);
+
+    cout << "First and Third Cubes - 2,5,8"
+         << "\n";
+    displayState(rowPointers);
+    cubeCombo(cubePointers[2], cubePointers[2 + 6], cubePointers[2 + 3], direction, cubePointers[3], cubePointers[4]);
+
+    cout << "Second and Third Cubes - 2,5,8"
+         << "\n";
+    displayState(rowPointers);
+    cubeCombo(cubePointers[2 + 3], cubePointers[2 + 6], cubePointers[2], direction, cubePointers[0], cubePointers[1]);
   }
 }
