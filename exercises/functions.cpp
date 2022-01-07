@@ -22,3 +22,9 @@ int main () {
   testing(arr1);
 
 }
+
+
+//Character type functions
+char* someMessage(){
+  return "Hello World";
+}
