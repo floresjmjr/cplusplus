@@ -2,6 +2,7 @@
 // #include "cubeClass.cpp"
 #include "solved.cpp"
 #include "index.h"
+#include <fstream>
 
 //SudokuSolver class
 class SudokuSolver
@@ -15,20 +16,45 @@ public:
 private:
   void formatCubes();
   void buildCube(int sR, int eR, int sC, int eC, int cube);
+  void readSudokuFile();
 
 public:
   SudokuSolver();
   void displayState();
 };
 
+void SudokuSolver::readSudokuFile()
+{
+
+  ifstream infile("problem.txt");
+
+  int number;
+  int counter = 0;
+  int nestedCounter = 0;
+  while (infile >> number)
+  { //While loop necessary as the >> operator reads a string only until it encounters white space character
+    sudokuState[counter][nestedCounter] = number;
+    if (nestedCounter == 9)
+    {
+      counter += 1;
+      nestedCounter = 0;
+      // cout << "\n";
+    }
+    nestedCounter += 1;
+    // cout << number << ", ";
+  }
+  // cout << "\n";
+}
+
 //Solver constructor (would like to pass in a nested array intead of global array)
 SudokuSolver::SudokuSolver()
 {
+  readSudokuFile();
   for (int i = 0; i < 9; i += 1)
   {
     for (int k = 0; k < 9; k += 1)
     {
-      sudokuState[i][k] = inputSudoku[i][k];
+      // sudokuState[i][k] = inputSudoku[i][k];
       rowPointers[i][k] = &(sudokuState[i][k]);
       columnPointers[k][i] = &(sudokuState[i][k]);
     }
@@ -80,8 +106,8 @@ void SudokuSolver::displayState()
     cout << "\n";
     if (((i - 2) % 3) == 0)
     {
-      if (i < 8)  //To avoid a third line
-      { 
+      if (i < 8) //To avoid a third line
+      {
         cout << "||=================================||"
              << "\n";
       }
