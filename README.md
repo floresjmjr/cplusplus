@@ -22,11 +22,12 @@ Stretch Goals
 ## Design Documents
 
 #### [UML Flowchart](https://app.diagrams.net/?libs=general;mockups#G1orL3Hs_VaYzdiGenEim6go1TTqkljhgt)
-![Flowchart](/readme/classDiagram.png)
+![Flowchart1](/readme/flowchartPart1.png)
+![Flowchart2](/readme/flowchartPart2.png)
 
 #### [UML Class Diagram](https://app.diagrams.net/?libs=general;uml#G11SfnzLYGzC2qY62wQ5ozEbfglDpc3AXN)
-![Flowchart](/readme/flowchartPart1.png)
-(/readme/flowchartPart2.png)
+![Class ](/readme/classDiagramCplusplus.png)
+
 
 
 
